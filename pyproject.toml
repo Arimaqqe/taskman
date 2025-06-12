@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "taskman"
+version = "0.1.0"
+description = ""
+authors = ["Arimaqqe <beebo120103@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.115.12"
+uvicorn = {extras = ["standart"], version = "^0.34.3"}
+pydantic = "^2.11.5"
+pydantic-settings = "^2.9.1"
+SQLAlchemy = {extras = ["asyncio"], version = "^2.0.41"}
+postgres = "^4.0"
+redis = "^6.2.0"
+fastapi-users = {extras = ["sqlalchemy"], version = "^14.0.1"}
+asyncpg = "^0.30.0"
+psycopg = "^3.2.9"
+psycopg-binary = "^3.2.9"
+alembic = "^1.16.1"
+
+[tool.poetry.dev-dependencies]
+commitizen = "^4.8.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
