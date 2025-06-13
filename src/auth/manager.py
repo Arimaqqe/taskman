@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Annotated, Optional
 
 from fastapi import Depends
 from fastapi_users import BaseUserManager, IntegerIDMixin
@@ -11,6 +11,7 @@ from src.config import settings
 
 if TYPE_CHECKING:
     from fastapi import Request
+    from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
 
 log = logging.getLogger(__name__)
 
@@ -54,5 +55,7 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, UserIdType]):
         )
 
 
-async def get_user_manager(user_db=Depends(get_user_db)):
+async def get_user_manager(
+    user_db: Annotated[SQLAlchemyUserDatabase, Depends(get_user_db)],
+):
     yield UserManager(user_db)
