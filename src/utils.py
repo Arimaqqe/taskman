@@ -36,7 +36,7 @@ def import_all_models_from_src():
     for path in base_path.rglob("*/models.py"):
         if path.parent.name in exclude_dirs:
             continue
-        relative = path.relative_to(base_path)
+        relative = path.relative_to(base_path.parent)
         module = str(relative).replace(os.sep, ".")[:-3]
         importlib.import_module(module)
         print(f"✅ {module}")

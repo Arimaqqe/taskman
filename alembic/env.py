@@ -11,7 +11,7 @@ sys.path.append(os.path.join(sys.path[0], 'src'))
 
 from src.config import settings
 from src.models import Base
-from utils import import_all_models_from_src
+from src.utils import import_all_models_from_src
 
 import_all_models_from_src()
 
