@@ -1,3 +1,8 @@
+import importlib
+import os
+from pathlib import Path
+
+
 def camel_case_to_snake_case(input_str: str) -> str:
     """
     >>> camel_case_to_snake_case("SomeSDK")
@@ -21,3 +26,17 @@ def camel_case_to_snake_case(input_str: str) -> str:
                 chars.append("_")
         chars.append(char.lower())
     return "".join(chars)
+
+
+def import_all_models_from_src():
+    exclude_dirs = {"alembic", "tests"}
+    base_path = Path(__file__).resolve().parent.parent / "src"
+    print("Imported models:")
+
+    for path in base_path.rglob("*/models.py"):
+        if path.parent.name in exclude_dirs:
+            continue
+        relative = path.relative_to(base_path)
+        module = str(relative).replace(os.sep, ".")[:-3]
+        importlib.import_module(module)
+        print(f"✅ {module}")
