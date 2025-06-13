@@ -6,6 +6,16 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+class ApiV1Prefix(BaseModel):
+    prefix: str = "/v1"
+    auth: str = "/auth"
+
+
+class ApiPrefix(BaseModel):
+    prefix: str = "/api"
+    v1: ApiV1Prefix = ApiV1Prefix()
+
+
 class DatabaseSettings(BaseModel):
     url: PostgresDsn
     echo: bool = False
@@ -37,6 +47,7 @@ class Settings(BaseSettings):
         env_prefix="APP_CONFIG__",
     )
 
+    api_prefix: ApiPrefix = ApiPrefix()
     db: DatabaseSettings
     access_token: AccessToken
 

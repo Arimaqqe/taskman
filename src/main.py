@@ -1,11 +1,15 @@
 from fastapi import FastAPI
 
+from api import router as api_router
+from config import settings
+
 app = FastAPI()
+app.include_router(api_router)
 
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World!"}
+    return {"Hello": f"World!{settings.access_token.lifetime_seconds}"}
 
 
 if __name__ == "__main__":
