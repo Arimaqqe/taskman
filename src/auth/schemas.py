@@ -1,6 +1,6 @@
 from fastapi_users import schemas
 
-from src.auth.types import UserIdType
+from auth.types import UserIdType
 
 
 class UserRead(schemas.BaseUser[UserIdType]):

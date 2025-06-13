@@ -5,16 +5,16 @@ from fastapi_users import FastAPIUsers
 from fastapi_users.authentication import AuthenticationBackend, BearerTransport
 from fastapi_users.authentication.strategy.db import DatabaseStrategy
 
-from src.auth.manager import get_user_manager
-from src.auth.models import User
-from src.auth.types import UserIdType
-from src.auth.utils import get_access_token_db
-from src.config import settings
+from auth.manager import get_user_manager
+from auth.models import User
+from auth.types import UserIdType
+from auth.utils import get_access_token_db
+from config import settings
 
 if TYPE_CHECKING:
     from fastapi_users.authentication.strategy.db import AccessTokenDatabase
 
-    from src.auth.models import AccessToken
+    from auth.models import AccessToken
 
 bearer_transport = BearerTransport(
     # TODO: update url
