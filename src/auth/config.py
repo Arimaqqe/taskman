@@ -16,10 +16,7 @@ if TYPE_CHECKING:
 
     from auth.models import AccessToken
 
-bearer_transport = BearerTransport(
-    # TODO: update url
-    tokenUrl="auth/jwt/login"
-)
+bearer_transport = BearerTransport(tokenUrl=settings.api_prefix.bearertoken_url)
 
 
 def get_database_strategy(
