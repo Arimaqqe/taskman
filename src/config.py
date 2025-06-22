@@ -9,6 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 class ApiV1Prefix(BaseModel):
     prefix: str = "/v1"
     auth: str = "/auth"
+    users: str = "/users"
 
 
 class ApiPrefix(BaseModel):
