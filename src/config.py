@@ -46,6 +46,14 @@ class AccessToken(BaseModel):
     verification_token_secret: str
 
 
+class DefaultUser(BaseModel):
+    email: str
+    password: str
+    is_active: bool
+    is_superuser: bool
+    is_verified: bool
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file={BASE_DIR / ".env"},
@@ -58,6 +66,7 @@ class Settings(BaseSettings):
     api_prefix: ApiPrefix = ApiPrefix()
     db: DatabaseSettings
     access_token: AccessToken
+    default_user: DefaultUser
 
 
 settings = Settings()
