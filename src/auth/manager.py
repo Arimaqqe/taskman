@@ -4,10 +4,10 @@ from typing import TYPE_CHECKING, Annotated, Optional
 from fastapi import Depends
 from fastapi_users import BaseUserManager, IntegerIDMixin
 
-from auth.models import User
-from auth.types import UserIdType
-from auth.utils import get_user_db
-from config import settings
+from src.auth.models import User
+from src.auth.types import UserIdType
+from src.auth.utils import get_user_db
+from src.config import settings
 
 if TYPE_CHECKING:
     from fastapi import Request

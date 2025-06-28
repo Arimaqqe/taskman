@@ -2,8 +2,8 @@ from typing import TYPE_CHECKING, Annotated
 
 from fastapi import Depends
 
-from auth.models import AccessToken, User
-from datebase import db_helper
+from src.auth.models import AccessToken, User
+from src.datebase import db_helper
 
 if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession
