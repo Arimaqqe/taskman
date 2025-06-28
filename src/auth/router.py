@@ -9,7 +9,12 @@ users_router = APIRouter(prefix=settings.api_prefix.v1.users, tags=["Users"])
 
 # /login
 # /logout
-auth_router.include_router(fastapi_users.get_auth_router(authentication_backend))
+auth_router.include_router(
+    fastapi_users.get_auth_router(
+        authentication_backend,
+        requires_verification=True,
+    )
+)
 
 # register
 auth_router.include_router(fastapi_users.get_register_router(UserRead, UserCreate))
