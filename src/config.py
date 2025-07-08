@@ -1,7 +1,10 @@
 from pathlib import Path
+from typing import Any
 
 from pydantic import BaseModel, PostgresDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+from src.constants import Environment
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,11 +28,19 @@ class ApiPrefix(BaseModel):
 
 
 class DatabaseSettings(BaseModel):
-    url: PostgresDsn
+    host: str = "localhost"
+    port: int = 5432
+    user: str = "postgres"
+    password: str = "postgres"
+    database: str = "postgres"
     echo: bool = False
     echo_pool: bool = False
     pool_size: int = 5
     max_overflow: int = 10
+
+    @property
+    def url(self) -> PostgresDsn:
+        return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
 
     naming_convention: dict[str, str] = {
         "ix": "ix_%(column_0_label)s",
@@ -54,19 +65,36 @@ class DefaultUser(BaseModel):
     is_verified: bool
 
 
+class CORSSettings(BaseModel):
+    orgins: list[str] = ["*"]
+    origins_regex: str | None = None
+    headers: list[str] = ["*"]
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file={BASE_DIR / ".env"},
         env_file_encoding="utf-8",
+        extra="ignore",
         case_sensitive=False,
         env_nested_delimiter="__",
         env_prefix="APP_CONFIG__",
     )
 
+    ENVIRONMENT: Environment = Environment.PRODUCTION
+
     api_prefix: ApiPrefix = ApiPrefix()
     db: DatabaseSettings
     access_token: AccessToken
     default_user: DefaultUser
+    cors: CORSSettings
 
 
 settings = Settings()
+
+app_configs: dict[str, Any] = {"title": "App API"}
+if settings.ENVIRONMENT.is_deployed:
+    app_configs["root_path"] = f"/v{settings.APP_VERSION}"
+
+if not settings.ENVIRONMENT.is_debug:
+    app_configs["openapi_url"] = None  # hide docs
